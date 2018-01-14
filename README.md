@@ -6,7 +6,7 @@ Todo管理ツールです。
 
 ### syntax
 
-  ruby todo.rb <command>
+  ruby todo.rb &lt;command&gt;
 
 ### command
 
