@@ -12,7 +12,7 @@ class Todo
     when 'add'
       Add.new.execute
     when 'complete'
-      Complete.new.execute
+      Complete.new.execute(argv)
     when 'list'
       List.new.execute(argv)
     else
