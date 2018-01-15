@@ -18,7 +18,7 @@ class Complete < Command
     argv.each do |v|
       index = v.to_i - 1
       if index < 0 || index > item_array.length - 1
-        puts "Noが有効な範囲の値ではありません"
+        puts "[ERROR]Noが有効な範囲の値ではありません"
         return
       else
         item_array[index] = nil
