@@ -14,7 +14,7 @@ class Todo
     when 'complete'
       Complete.new.execute
     when 'list'
-      List.new.execute
+      List.new.execute(argv)
     else
       syntax
     end

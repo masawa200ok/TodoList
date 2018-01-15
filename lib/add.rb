@@ -6,18 +6,18 @@ class Add < Command
   def execute
 
     print "優先度(1 or 2 or 3): "
-    level = gets.chomp
+    level = STDIN.gets.chomp
     unless validate_level(level)
       return
     end
 
     print "タイトル: "
-    title = gets.chomp
+    title = STDIN.gets.chomp
 
     print "内容: "
-    text = gets.chomp
+    text = STDIN.gets.chomp
 
-    item = Item.new(level, title, text)
+    item = Item.new(0, level, title, text)
 
     File.open(DB, "a") do |f|
       f.puts(item.to_db)

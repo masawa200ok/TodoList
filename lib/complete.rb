@@ -7,7 +7,7 @@ class Complete < Command
   def execute
     
     print "Noを入力してください:"
-    temp_index = gets.chomp
+    temp_index = STDIN.gets.chomp
     unless validate_index(temp_index)
       return
     end

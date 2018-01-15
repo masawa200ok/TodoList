@@ -3,25 +3,23 @@ require './lib/command'
 
 class List < Command
   
-  def execute
-    
+  def execute(argv)
     item_array = get_item_list
 
-    item_array.each_with_index do |item, idx|
-      idx += 1
-      puts "No:#{idx} - #{item.to_list}"
-    end
+    item_array = filter_by_keyword(argv, item_array)
 
+    item_array.each_with_index do |item, idx|
+      puts item.to_list
+    end
   end
 
   def get_item_list
-
     item_array = []
 
     File.open(DB, "r") do |f|
       f.each_line do |line|
         array = line.split("|")
-        item = Item.new(array[0], array[1], array[2])
+        item = Item.new(0, array[0], array[1], array[2])
         item_array.push(item)
       end
     end
@@ -30,7 +28,34 @@ class List < Command
       a.to_db <=> b.to_db
     end
 
+    item_array.each_with_index do |item, index|
+      item.index = index + 1
+    end
+
     item_array
+  end
+
+  def filter_by_keyword(argv, item_array)
+    keyword = ""
+    argv.each do |v|
+      if m = /^-f(.+?)$/.match(v)
+        keyword = m[1]
+        break
+      end
+    end
+    if keyword == ""
+      return item_array
+    end
+
+    return_array = []
+    item_array.each do |item|
+      if /#{keyword}/ =~ item.title
+        return_array.push(item)
+      elsif /#{keyword}/ =~ item.text
+        return_array.push(item)
+      end
+    end
+    return_array
   end
 
 end

@@ -1,8 +1,9 @@
 class Item
  
-  attr_reader :level, :title, :text
+  attr_accessor :index, :level, :title, :text
 
-  def initialize(level, title, text)
+  def initialize(index, level, title, text)
+    @index = index
     @level = level
     @title = title
     @text = text
@@ -13,6 +14,6 @@ class Item
   end
 
   def to_list
-    "優先度: #{@level}, タイトル: #{@title}, 内容: #{@text}"
+    "No: #{@index}, 優先度: #{@level}, タイトル: #{@title}, 内容: #{@text}"
   end
 end

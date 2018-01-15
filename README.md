@@ -6,11 +6,17 @@ Todo管理ツールです。
 
 ### syntax
 
-ruby todo.rb &lt;command&gt;
+ruby todo.rb &lt;command&gt; &lt;option&gt;
 
 ### command
 
 - list     - Todoリストを表示する
 - add      - Todoリストに追加する
 - complete - Todoリストから削除する
+
+### option
+
+- listコマンドについてはオプションがあります。
+
+  - -fフィルターしたい文字列
 
