@@ -4,9 +4,12 @@ require './lib/command'
 class List < Command
   
   def execute(argv)
-    item_array = get_item_list
+    unless item_array = get_item_list
+      return
+    end
 
     item_array = filter_by_keyword(argv, item_array)
+    item_array = filter_by_level(argv, item_array)
 
     item_array.each_with_index do |item, idx|
       puts item.to_list
@@ -15,6 +18,10 @@ class List < Command
 
   def get_item_list
     item_array = []
+
+    unless File.exists?(DB)
+      return nil
+    end
 
     File.open(DB, "r") do |f|
       f.each_line do |line|
@@ -58,4 +65,24 @@ class List < Command
     return_array
   end
 
+  def filter_by_level(argv, item_array)
+    level = ""
+    argv.each do |v|
+      if m = /^-l(\d+?)$/.match(v)
+        level = m[1]
+        break
+      end
+    end
+    if level == ""
+      return item_array
+    end
+
+    return_array = []
+    item_array.each do |item|
+      if level.to_i == item.index
+        return_array.push(item)
+      end
+    end
+    return_array
+  end
 end

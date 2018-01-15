@@ -12,7 +12,7 @@ class Todo
     when 'add'
       Add.new.execute
     when 'complete'
-      Complete.new.execute
+      Complete.new.execute(argv)
     when 'list'
       List.new.execute(argv)
     else
@@ -24,12 +24,20 @@ class Todo
   def syntax
     text = <<~TEXT
       <syntax>
-        ruby todo.rb <command>
+        ruby todo.rb <command> <option>
 
       <command>
         list     - Todoリストを表示する 
         add      - Todoリストに追加する
-        complete - Todoリストから削除する
+        complete - Todoリストから完了する
+
+      <option>
+        list
+          -f タイトル、内容で、指定した文字列でフィルタリングを行う
+          -l 優先度でフィルタリングする
+
+        complete
+          完了するNoを指定する
     TEXT
     puts text
   end

@@ -4,28 +4,33 @@ require './lib/item'
 
 class Complete < Command
   
-  def execute
+  def execute(argv)
     
-    print "Noを入力してください:"
-    temp_index = STDIN.gets.chomp
-    unless validate_index(temp_index)
-      return
+    argv.each do |index|
+      unless validate_index(index)
+        puts "[ERROR]数値を入力してください"
+        return
+      end
     end
-    index = temp_index.to_i
-    index -= 1
     
     item_array = List.new.get_item_list
 
-    if index < 0 || index > item_array.length - 1
-      puts "Noが有効な範囲の値ではありません"
-    else
-      item_array.delete_at(index)
+    argv.each do |v|
+      index = v.to_i - 1
+      if index < 0 || index > item_array.length - 1
+        puts "Noが有効な範囲の値ではありません"
+        return
+      else
+        item_array[index] = nil
+      end
     end
 
     File.delete(DB)
     File.open(DB, "a") do |f|
       item_array.each do |item|
-        f.puts(item.to_db)
+        unless item.nil?
+          f.puts(item.to_db)
+        end
       end
     end
 
@@ -35,7 +40,6 @@ class Complete < Command
     if /\d+/ =~ index
       true
     else
-      puts "[ERROR]数値を入力してください"
       false
     end
   end
