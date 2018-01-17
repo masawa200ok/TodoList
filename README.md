@@ -19,7 +19,7 @@ ruby todo.rb &lt;command&gt; &lt;option&gt;
 - listコマンドには以下のオプションがあります。
 
   - -fタイトルと内容でフィルターしたい文字列
-  - -lフィルターしたい優先度（1 or 2 or 3）
+  - -pフィルターしたい優先度（1 or 2 or 3）
 
 - completeコマンドにはlistで確認したNoをオプションとして指定します。
   
