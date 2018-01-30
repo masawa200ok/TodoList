@@ -1,21 +1,28 @@
 require './lib/item'
 require './lib/command'
 
+# Todoアイテムの一覧を表示するクラス
 class List < Command
   
   def execute(argv)
+    # Todoアイテムを取得
     unless item_array = get_item_list
       return
     end
 
+    # コマンドオプション：キーワードによるフィルタ
     item_array = filter_by_keyword(argv, item_array)
+    
+    # コマンドオプション：優先度によるフィルタ
     item_array = filter_by_priority(argv, item_array)
 
+    # 標準出力に表示
     item_array.each_with_index do |item, idx|
       puts item.to_list
     end
   end
 
+  # TodoアイテムをDBファイルから取得
   def get_item_list
     item_array = []
 
@@ -31,17 +38,21 @@ class List < Command
       end
     end
 
+     # 優先順位等でソート
     item_array.sort! do |a, b|
       a.to_db <=> b.to_db
     end
 
+    # TodoアイテムにNoを振る
     item_array.each_with_index do |item, index|
       item.index = index + 1
     end
 
+    # Todoアイテムのリストを返す
     item_array
   end
 
+  # コマンドオプション：キーワードによるフィルタ
   def filter_by_keyword(argv, item_array)
     keyword = ""
     argv.each do |v|
@@ -65,6 +76,7 @@ class List < Command
     return_array
   end
 
+  # コマンドオプション：優先度によるフィルタ
   def filter_by_priority(argv, item_array)
     level = ""
     argv.each do |v|
